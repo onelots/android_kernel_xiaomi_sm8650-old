@@ -1,6 +1,7 @@
 # keep sorted
 load("//build:msm_kernel_extensions.bzl", "define_top_level_rules")
 load(":anorak.bzl", "define_anorak")
+load(":aurora.bzl", "define_aurora")
 load(":autoghgvm.bzl", "define_autoghgvm")
 load(":autoghgvm_lxc.bzl", "define_autoghgvm_lxc")
 load(":autogvm.bzl", "define_autogvm")
@@ -25,6 +26,7 @@ load(":pitti.bzl", "define_pitti")
 load(":sdmsteppeauto.bzl", "define_sdmsteppeauto")
 load(":seraph.bzl", "define_seraph")
 load(":seraph_tuivm.bzl", "define_seraph_tuivm")
+load(":xiaomi_sm8650_common.bzl", "export_xiaomi_headers")
 
 def define_msm_platforms():
     define_top_level_rules()
@@ -53,3 +55,5 @@ def define_msm_platforms():
     define_neo_tuivm()
     define_mdm9607()
     define_neo_le()
+    define_aurora()
+    export_xiaomi_headers()

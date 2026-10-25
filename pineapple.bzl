@@ -4,8 +4,9 @@ load(":target_variants.bzl", "la_variants")
 
 target_name = "pineapple"
 
-def define_pineapple():
-    _pineapple_in_tree_modules = [
+target_arch = "pineapple"
+
+target_arch_in_tree_modules = [
         # keep sorted
         "arch/arm64/gunyah/gh_arm_drv.ko",
         "drivers/base/regmap/qti-regmap-debugfs.ko",
@@ -291,9 +292,9 @@ def define_pineapple():
         "net/wireless/cfg80211.ko",
         "sound/soc/codecs/snd-soc-hdmi-codec.ko",
         "sound/usb/snd-usb-audio-qmi.ko",
-    ]
+]
 
-    _pineapple_consolidate_in_tree_modules = _pineapple_in_tree_modules + [
+target_arch_consolidate_in_tree_modules = [
         # keep sorted
         "drivers/cpuidle/governors/qcom_simple_lpm.ko",
         "drivers/hwtracing/coresight/coresight-etm4x.ko",
@@ -305,14 +306,23 @@ def define_pineapple():
         "kernel/torture.ko",
         "lib/atomic64_test.ko",
         "lib/test_user_copy.ko",
-    ]
+]
 
-    kernel_vendor_cmdline_extras = [
+target_arch_kernel_vendor_cmdline_extras = [
         # do not sort
         "console=ttyMSM0,115200n8",
         "qcom_geni_serial.con_enabled=1",
         "bootconfig",
-    ]
+]
+
+target_arch_board_kernel_cmdline_extras = []
+
+target_arch_board_bootconfig_extras = []
+
+def define_pineapple():
+    _pineapple_in_tree_modules = target_arch_in_tree_modules
+    _pineapple_consolidate_in_tree_modules = target_arch_in_tree_modules + target_arch_consolidate_in_tree_modules
+    kernel_vendor_cmdline_extras = list(target_arch_kernel_vendor_cmdline_extras)
 
     for variant in la_variants:
         board_kernel_cmdline_extras = []

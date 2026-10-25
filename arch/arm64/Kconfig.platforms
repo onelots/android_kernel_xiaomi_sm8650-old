@@ -260,6 +260,14 @@ config ARCH_PINEAPPLE
 	  chipset. If you do not wish to build a kernel that runs on this
 	  chipset or if you are unsure, say 'N' here.
 
+config TARGET_PRODUCT_AURORA
+	bool "Enable device-specific device trees for Xiaomi aurora"
+	depends on ARCH_PINEAPPLE
+	help
+	  This selects the Xiaomi 14 Ultra (aurora) device trees (DTB overlay,
+	  camera, audio and display) instead of the generic Pineapple boards.
+	  If you are not building for aurora, say 'N' here.
+
 config ARCH_NIOBE
         bool "Enable support for Qualcomm Technologies, Inc. Niobe"
         depends on ARCH_QCOM

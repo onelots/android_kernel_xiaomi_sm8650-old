@@ -36,6 +36,7 @@ load(":target_variants.bzl", "la_variants")
 
 def _define_build_config(
         msm_target,
+        msm_arch,
         target,
         variant,
         boot_image_opts = boot_image_opts(),
@@ -60,7 +61,8 @@ def _define_build_config(
         content = [
             'KERNEL_DIR="msm-kernel"',
             "VARIANTS=({})".format(" ".join(la_variants)),
-            "MSM_ARCH={}".format(msm_target.replace("-", "_")),
+            "MSM_TARGET={}".format(msm_target.replace("-", "_")),
+            "MSM_ARCH={}".format(msm_arch.replace("-", "_")),
             "VARIANT={}".format(variant.replace("-", "_")),
             "ABL_SRC=bootable/bootloader/edk2",
             "BOOT_IMAGE_HEADER_VERSION={}".format(boot_image_opts.boot_image_header_version),
@@ -440,7 +442,8 @@ def define_msm_la(
         in_tree_module_list,
         kmi_enforced = True,
         dpm_overlay = False,
-        boot_image_opts = boot_image_opts()):
+        boot_image_opts = boot_image_opts(),
+        msm_arch = None):
     """Top-level kernel build definition macro for an MSM platform
 
     Args:
@@ -458,6 +461,9 @@ def define_msm_la(
 
     if not variant in la_variants:
         fail("{} not defined in target_variants.bzl la_variants!".format(variant))
+
+    if msm_arch == None:
+        msm_arch = msm_target
 
     # Enforce format of "//msm-kernel:target-foo_variant-bar" (underscore is the delimeter
     # between target and variant)
@@ -495,6 +501,7 @@ def define_msm_la(
 
     _define_build_config(
         msm_target,
+        msm_arch,
         target,
         variant,
         boot_image_opts = boot_image_opts,
